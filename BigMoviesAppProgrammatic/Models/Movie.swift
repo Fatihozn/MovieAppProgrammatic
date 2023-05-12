@@ -12,11 +12,13 @@ struct Movie: Decodable {
 }
 
 struct MovieResult: Decodable {
-    var id: Int?
+    var id, numberOfSeasons, episodes: Int?
     var posterPath: String?
-    var title, overview, releaseDate: String?
+    var title, overview, releaseDate, name, firstAirDate, mediaType: String?
     var genres: [kategori]?
     var voteAverage: Double?
+    
+    
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -25,7 +27,12 @@ struct MovieResult: Decodable {
         case overview
         case releaseDate = "release_date"
         case genres
+        case name
         case voteAverage = "vote_average"
+        case numberOfSeasons = "number_of_seasons"
+        case firstAirDate = "first_air_date"
+        case episodes = "number_of_episodes"
+        case mediaType = "media_type"
     }
     
     var _id: Int {
@@ -38,6 +45,10 @@ struct MovieResult: Decodable {
     
     var _title: String {
         title ?? "There is no title"
+    }
+    
+    var _name: String {
+        name ?? "There is no name"
     }
     
     var _overview: String {
@@ -54,6 +65,22 @@ struct MovieResult: Decodable {
     
     var _genres: [kategori] {
         genres ?? []
+    }
+    
+    var _firstAirDate: String {
+        firstAirDate ?? "There is no date"
+    }
+    
+    var _numberOfSeasons: Int {
+        numberOfSeasons ?? 0
+    }
+    
+    var _episodes: Int {
+        episodes ?? 0
+    }
+    
+    var _mediaType: String {
+        mediaType ?? ""
     }
     
 }

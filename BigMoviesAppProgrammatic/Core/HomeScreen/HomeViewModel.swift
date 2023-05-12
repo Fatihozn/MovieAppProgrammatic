@@ -83,19 +83,32 @@ extension HomeViewModel: HomeViewModelProtocol {
         }
     }
     func getDetail(id: Int) {
-        service.downloadDetail(id: id) { [weak self] returnedDetail in
+        var url = ""
+        if view?.ApiControl == "tv" {
+             url = APIURLs.getDetailTV(id: id)
+        } else {
+             url = APIURLs.getDetail(id: id)
+        }
+        service.downloadDetail(url: url,id: id) { [weak self] (returnedDetail, data) in
             guard let self = self else { return }
             guard let returnedDetail = returnedDetail else { return }
             
-            self.view?.navigateToDetail(movie: returnedDetail)
+            self.view?.navigateToDetail(movie: returnedDetail, data: data)
         }
     }
     
     func configureMovies() {
-        getMovies(url: APIURLs.getPopularMovies(page: popularPage), list: "popular")
-        getMovies(url: APIURLs.getNowPlayingMovies(page: nowPlayingPage), list: "now")
-        getMovies(url: APIURLs.getUpcomingMovies(page: upcomingPage), list: "upcoming")
-        getMovies(url: APIURLs.getTopRatedMovies(page: topRatedPage), list: "top")
+        if view?.ApiControl == "tv" {
+            getMovies(url: APIURLs.getPopularTV(page: popularPage), list: "popular")
+            getMovies(url: APIURLs.getNowPlayingTV(page: nowPlayingPage), list: "now")
+            getMovies(url: APIURLs.getUpcommingTV(page: upcomingPage), list: "upcoming")
+            getMovies(url: APIURLs.getTopRatedTV(page: topRatedPage), list: "top")
+        } else {
+            getMovies(url: APIURLs.getPopularMovies(page: popularPage), list: "popular")
+            getMovies(url: APIURLs.getNowPlayingMovies(page: nowPlayingPage), list: "now")
+            getMovies(url: APIURLs.getUpcomingMovies(page: upcomingPage), list: "upcoming")
+            getMovies(url: APIURLs.getTopRatedMovies(page: topRatedPage), list: "top")
+        }
     }
     
 }

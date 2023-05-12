@@ -37,7 +37,7 @@ enum APIURLs {
         "https://api.themoviedb.org/3/tv/on_the_air?api_key=adc8a5bdc6760c74947ac29f385ebd15&language=en-US&page=\(page)"
     }
     
-    static func getTopRatingTV(page: Int) -> String {
+    static func getTopRatedTV(page: Int) -> String {
         "https://api.themoviedb.org/3/tv/top_rated?api_key=adc8a5bdc6760c74947ac29f385ebd15&language=en-US&page=\(page)"
     }
     
@@ -57,6 +57,10 @@ enum APIURLs {
         "https://api.themoviedb.org/3/tv/\(id)/similar?api_key=adc8a5bdc6760c74947ac29f385ebd15&language=en-US&page=\(page)"
     }
     
+    static func getCastTV(id: Int) -> String {
+        "https://api.themoviedb.org/3/tv/\(id)/credits?api_key=adc8a5bdc6760c74947ac29f385ebd15&language=en-US"
+    }
+    
     static func getDetail(id: Int) -> String {
         "https://api.themoviedb.org/3/movie/\(id)?api_key=adc8a5bdc6760c74947ac29f385ebd15&language=en-US"
     }
@@ -73,7 +77,23 @@ enum APIURLs {
         "https://api.themoviedb.org/3/movie/\(id)/credits?api_key=adc8a5bdc6760c74947ac29f385ebd15&language=en-US"
     }
     
-    static func getSearch(text: String, page: Int) -> String {
-        "https://api.themoviedb.org/3/search/movie?api_key=adc8a5bdc6760c74947ac29f385ebd15&language=en-US&query=\(text)&page=\(page)&include_adult=false"
+    static func getSearch(text: String) -> String {
+        "https://api.themoviedb.org/3/search/multi?api_key=adc8a5bdc6760c74947ac29f385ebd15&language=en-US&query=\(text)&page=1&include_adult=false"
+    }
+    
+    static func getTrending() -> String {
+        "https://api.themoviedb.org/3/trending/all/day?api_key=adc8a5bdc6760c74947ac29f385ebd15"
+    }
+    
+    static func getCastDetail(id: Int) -> String {
+        "https://api.themoviedb.org/3/person/\(id)?api_key=adc8a5bdc6760c74947ac29f385ebd15&language=en-US"
+    }
+    
+    static func getTVCredits(id: Int) -> String {
+        "https://api.themoviedb.org/3/person/\(id)/tv_credits?api_key=adc8a5bdc6760c74947ac29f385ebd15&language=en-US"
+    }
+    
+    static func getMovieCredits(id: Int) -> String {
+        "https://api.themoviedb.org/3/person/\(id)/movie_credits?api_key=adc8a5bdc6760c74947ac29f385ebd15&language=en-US"
     }
 }

@@ -11,8 +11,10 @@ import AVFoundation
 import YouTubeiOSPlayerHelper
 
 protocol DetailScreenProtocol: AnyObject {
-    
+    var ApiControl: String { get set }
+   
     func configureVC()
+    func configFavButton()
     func configureInfoView()
     func configureVideo()
     func configureCast()
@@ -21,27 +23,38 @@ protocol DetailScreenProtocol: AnyObject {
     func getCast()
     func reloadCollectionView()
     func reloadCastCollectionView()
-    func navigateToDetail(movie: MovieResult)
+    func navigateToDetail(movie: MovieResult, data: Data)
+    func navigateToCastDetail(cast: CastResult)
 }
 
 final class DetailScreen: UIViewController, YTPlayerViewDelegate {
 
-    private var movie: MovieResult!
+    var ApiControl: String
+    private var movie: MovieResult
+    private var data: Data
     let viewModel = DetailViewModel()
     
     private var scrollView: UIScrollView!
     private var stackView: UIStackView!
     
-    private var similarCollectionView: UICollectionView!
-    private var castCollectionView: UICollectionView!
+    private var similarCollectionView: UICollectionView?
+    private var castCollectionView: UICollectionView?
     private var infoView: DetailInfoView!
+    private var favButton: UIBarButtonItem?
     
     private var playerView: VideoPlayerView!
+    private let userDefault = UserDefaults.standard
+    private var favList = [Data]()
+    private var favListControl = [String]()
     
-    init(movie: MovieResult) {
+    init(movie: MovieResult, ApiControl: String, data: Data) {
         viewModel.getVideo(id: movie._id)
         self.movie = movie
+        self.ApiControl = ApiControl
+        self.data = data
         super.init(nibName: nil, bundle: nil)
+        favList = userDefault.array(forKey: "favList") as? [Data] ?? [Data]()
+        favListControl = userDefault.array(forKey: "control") as? [String] ?? [String]()
     }
     
     required init?(coder: NSCoder) {
@@ -56,6 +69,9 @@ final class DetailScreen: UIViewController, YTPlayerViewDelegate {
         
     }
     override func viewWillAppear(_ animated: Bool) {
+        favList = userDefault.array(forKey: "favList") as? [Data] ?? [Data]()
+        favListControl = userDefault.array(forKey: "control") as? [String] ?? [String]()
+        viewModel.viewWillApear()
         if let playerView = playerView {
             playerView.playVideo()
         }
@@ -64,18 +80,18 @@ final class DetailScreen: UIViewController, YTPlayerViewDelegate {
     override func viewDidDisappear(_ animated: Bool) {
         playerView = nil
     }
-    
-    func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
-           playerView.playVideo() 
-    }
-    
 }
 
 extension DetailScreen: DetailScreenProtocol {
+    
     func configureVC() {
         view.backgroundColor = .systemBackground
         navigationController?.isNavigationBarHidden = false
-        title = movie._title
+        if ApiControl == "tv" {
+            title = movie._name
+        } else {
+            title = movie._title
+        }
         scrollView = UIScrollView()
         view.addSubview(scrollView)
         
@@ -89,29 +105,86 @@ extension DetailScreen: DetailScreenProtocol {
         stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
     }
     
-    func navigateToDetail(movie: MovieResult) {
+    func configFavButton() {
+        
+        if favList.contains(data) {
+            favButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteFavButton))
+            navigationItem.rightBarButtonItem = favButton
+        } else {
+            favButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(favButtonClicked))
+            navigationItem.rightBarButtonItem = favButton
+        }
+        
+    }
+    
+    @objc func favButtonClicked() {
+        favList.append(data)
+        favListControl.append(ApiControl)
+        //favList.removeAll()
+        //favListControl.removeAll()
+        print(favList)
+        print(favListControl)
+        userDefault.set(favList, forKey: "favList")
+        userDefault.set(favListControl, forKey: "control")
+        
+        favButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteFavButton))
+        navigationItem.rightBarButtonItem = favButton
+    }
+    
+    @objc func deleteFavButton() {
+        if let index = favList.firstIndex(of: data) {
+            favList.remove(at: index)
+            favListControl.remove(at: index)
+            print(favList)
+            print(favListControl)
+            userDefault.set(favList, forKey: "favList")
+            userDefault.set(favListControl, forKey: "control")
+        }
+        favButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(favButtonClicked))
+        navigationItem.rightBarButtonItem = favButton
+    }
+    
+    func navigateToDetail(movie: MovieResult, data: Data) {
         DispatchQueue.main.async {
-            self.navigationController?.pushViewController(DetailScreen(movie: movie), animated: true)
+            self.navigationController?.pushViewController(DetailScreen(movie: movie, ApiControl: self.ApiControl, data: data), animated: true)
+        }
+    }
+    
+    func navigateToCastDetail(cast: CastResult) {
+        DispatchQueue.main.async {
+            self.navigationController?.pushViewController(CastDetailScreen(cast: cast), animated: true)
         }
     }
     
     func getMovie() {
-        viewModel.getSimilarMovies(url: APIURLs.getSimilarMovies(id: movie._id, page: viewModel.page))
+        var url = ""
+        if ApiControl == "tv" {
+            url = APIURLs.getSimilarTV(id: movie._id, page: 1)
+        } else {
+            url = APIURLs.getSimilarMovies(id: movie._id, page: 1)
+        }
+        viewModel.getSimilar(url: url)
     }
     
     func getCast() {
-        viewModel.getCast(url: APIURLs.getCast(id: movie._id))
+        var url = ""
+        if ApiControl == "tv" {
+            url = APIURLs.getCastTV(id: movie._id)
+        } else {
+            url = APIURLs.getCast(id: movie._id)
+        }
+        viewModel.getCast(url: url)
     }
     
     func reloadCollectionView() {
-        similarCollectionView.reloadOnMainThread()
+        similarCollectionView?.reloadOnMainThread()
     }
     func reloadCastCollectionView() {
-        castCollectionView.reloadOnMainThread()
+        castCollectionView?.reloadOnMainThread()
     }
     
     func configureInfoView() {
-        infoView = DetailInfoView(frame: .zero, movie: movie)
+        infoView = DetailInfoView(frame: .zero, movie: movie, ApiControl: ApiControl)
         stackView.addArrangedSubview(infoView)
         
         NSLayoutConstraint.activate([
@@ -141,20 +214,20 @@ extension DetailScreen: DetailScreenProtocol {
         title.font = .boldSystemFont(ofSize: 24)
         
         castCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UIHelper.createCollectionFlowLayout(kategori: "cast"))
-        stackView.addArrangedSubview(castCollectionView)
+        stackView.addArrangedSubview(castCollectionView!)
         
-        castCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        castCollectionView!.translatesAutoresizingMaskIntoConstraints = false
         
-        castCollectionView.register(CastCell.self, forCellWithReuseIdentifier: CastCell.reuseID)
-        castCollectionView.delegate = self
-        castCollectionView.dataSource = self
-        castCollectionView.showsHorizontalScrollIndicator = false
+        castCollectionView!.register(CastCell.self, forCellWithReuseIdentifier: CastCell.reuseID)
+        castCollectionView!.delegate = self
+        castCollectionView!.dataSource = self
+        castCollectionView!.showsHorizontalScrollIndicator = false
         
         let collectionWidth = CGFloat.dWidth * 0.45
         
         NSLayoutConstraint.activate([
-            castCollectionView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
-            castCollectionView.heightAnchor.constraint(equalToConstant: collectionWidth * 1.5)
+            castCollectionView!.widthAnchor.constraint(equalTo: stackView.widthAnchor),
+            castCollectionView!.heightAnchor.constraint(equalToConstant: collectionWidth * 1.5)
         ])
     }
     
@@ -162,26 +235,29 @@ extension DetailScreen: DetailScreenProtocol {
         let title = UILabel(frame: .zero)
         stackView.addArrangedSubview(title)
         
-        title.text = "Similar Movies"
+        if ApiControl == "tv" {
+            title.text = "Similar Shows"
+        } else {
+            title.text = "Similar Movies"
+        }
         title.font = .boldSystemFont(ofSize: 24)
-        
+    
         similarCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UIHelper.createCollectionFlowLayout())
-        stackView.addArrangedSubview(similarCollectionView)
+        stackView.addArrangedSubview(similarCollectionView!)
         
-        similarCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        similarCollectionView!.translatesAutoresizingMaskIntoConstraints = false
         
-        similarCollectionView.register(MovieCell.self, forCellWithReuseIdentifier: MovieCell.reuseID)
-        similarCollectionView.delegate = self
-        similarCollectionView.dataSource = self
-        similarCollectionView.showsHorizontalScrollIndicator = false
+        similarCollectionView!.register(MovieCell.self, forCellWithReuseIdentifier: MovieCell.reuseID)
+        similarCollectionView!.delegate = self
+        similarCollectionView!.dataSource = self
+        similarCollectionView!.showsHorizontalScrollIndicator = false
         
         let collectionWidth = CGFloat.dWidth * 0.5
         
         NSLayoutConstraint.activate([
-            similarCollectionView.widthAnchor.constraint(equalTo: stackView.widthAnchor),
-            similarCollectionView.heightAnchor.constraint(equalToConstant: collectionWidth * 1.5)
+            similarCollectionView!.widthAnchor.constraint(equalTo: stackView.widthAnchor),
+            similarCollectionView!.heightAnchor.constraint(equalToConstant: collectionWidth * 1.5)
         ])
-        
     }
     
 }
@@ -198,13 +274,13 @@ extension DetailScreen: UICollectionViewDelegate, UICollectionViewDataSource {
         
         if collectionView == similarCollectionView {
             
-            let cell = similarCollectionView.dequeueReusableCell(withReuseIdentifier: MovieCell.reuseID, for: indexPath) as! MovieCell
+            let cell = similarCollectionView?.dequeueReusableCell(withReuseIdentifier: MovieCell.reuseID, for: indexPath) as! MovieCell
             
             cell.setCell(movie: viewModel.moviesList[indexPath.item])
             return cell
         }
         
-        let cell = castCollectionView.dequeueReusableCell(withReuseIdentifier: CastCell.reuseID, for: indexPath) as! CastCell
+        let cell = castCollectionView?.dequeueReusableCell(withReuseIdentifier: CastCell.reuseID, for: indexPath) as! CastCell
         
         cell.setCell(cast: viewModel.castList[indexPath.item])
         
@@ -215,24 +291,11 @@ extension DetailScreen: UICollectionViewDelegate, UICollectionViewDataSource {
         if collectionView == similarCollectionView {
             viewModel.getDetail(id: viewModel.moviesList[indexPath.item]._id)
         }
-    }
-    
-}
-
-extension DetailScreen {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        if scrollView == similarCollectionView {
-            
-            let offsetX = scrollView.contentOffset.x
-            let contentWidth = scrollView.contentSize.width
-            let width = scrollView.frame.size.width
-            
-            guard offsetX != 0 else { return }
-            if offsetX >= contentWidth - (width * 2) && viewModel.shouldMoreData{
-                viewModel.getSimilarMovies(url: APIURLs.getSimilarMovies(id: movie._id, page: viewModel.page))
-            }
+        if collectionView == castCollectionView {
+            viewModel.getCastDetail(id: viewModel.castList[indexPath.item]._id)
         }
     }
+    
 }
 

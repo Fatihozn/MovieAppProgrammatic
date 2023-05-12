@@ -11,7 +11,7 @@ protocol DetailViewModelProtocol {
     var view: DetailScreenProtocol? { get set }
     
     func viewDidload()
-    func getSimilarMovies(url: String)
+    func getSimilar(url: String)
 }
 
 final class DetailViewModel {
@@ -21,8 +21,6 @@ final class DetailViewModel {
     var moviesList = [MovieResult]()
     var castList = [CastResult]()
     var videoUrl = ""
-    var page = 1
-    var shouldMoreData = true
 }
 
 extension DetailViewModel: DetailViewModelProtocol {
@@ -30,24 +28,30 @@ extension DetailViewModel: DetailViewModelProtocol {
     func viewDidload() {
         view?.configureVC()
         view?.configureInfoView()
-        view?.configureVideo()
-        view?.configureCast()
-        view?.configureSimilarMovies()
-        view?.getMovie()
+        if self.videoUrl != "" {
+            self.view?.configureVideo()
+        }
         view?.getCast()
-        
+        view?.getMovie()
     }
     
-    func getSimilarMovies(url: String) {
-        shouldMoreData = false
+    func viewWillApear() {
+        view?.configFavButton()
+    }
+    
+    func getSimilar(url: String) {
         service.downloadMovies(url: url) { [weak self] returnedList in
             guard let self = self else { return }
             guard let returnedList = returnedList else { return }
             
-            self.moviesList.append(contentsOf: returnedList)
-            self.view?.reloadCollectionView()
-            self.page += 1
-            self.shouldMoreData = true
+            if returnedList.count != 0 {
+                DispatchQueue.main.async {
+                    self.view?.configureSimilarMovies()
+                }
+                
+                self.moviesList.append(contentsOf: returnedList)
+                self.view?.reloadCollectionView()
+            }
         }
     }
     
@@ -56,33 +60,66 @@ extension DetailViewModel: DetailViewModelProtocol {
             guard let self = self else { return }
             guard let returnedCast = returnedCast else { return }
             
-            self.castList.append(contentsOf: returnedCast)
-            self.view?.reloadCastCollectionView()
-            
+            if returnedCast.count != 0 {
+                DispatchQueue.main.async {
+                    self.view?.configureCast()
+                }
+                
+                var slicedList = returnedCast
+                if returnedCast.count > 10 {
+                    slicedList = Array(returnedCast[0..<10])
+                }
+                
+                self.castList.append(contentsOf: slicedList)
+                self.view?.reloadCastCollectionView()
+            }
         }
     }
     
     func getDetail(id: Int) {
-        service.downloadDetail(id: id) { [weak self] returnedDetail in
+        var url = ""
+        if view?.ApiControl == "tv" {
+            url = APIURLs.getDetailTV(id: id)
+        } else {
+            url = APIURLs.getDetail(id: id)
+        }
+        service.downloadDetail(url: url, id: id) { [weak self] (returnedDetail, data) in
             guard let self = self else { return }
             guard let returnedDetail = returnedDetail else { return }
             
-            self.view?.navigateToDetail(movie: returnedDetail)
+            self.view?.navigateToDetail(movie: returnedDetail, data: data)
         }
     }
     
     func getVideo(id: Int) {
-        service.downloadVideo(url: APIURLs.getVideoUrl(id: id)) { [weak self] returnedVideoUrls in
+        var url = ""
+        if view?.ApiControl == "tv" {
+            url = APIURLs.getVideoUrlTV(id: id)
+        } else {
+            url = APIURLs.getVideoUrl(id: id)
+        }
+        service.downloadVideo(url: url) { [weak self] returnedVideoUrls in
             guard let self = self else { return }
-            guard let returnedVideoUrls = returnedVideoUrls else { return }
+            guard let returnedVideoUrls = returnedVideoUrls else {
+                videoUrl = ""
+                return
+            }
             for url in returnedVideoUrls {
-                print(url._key)
                 if url._key != "" {
                     videoUrl = url._key
                     return
                 }
             }
             
+        }
+    }
+    
+    func getCastDetail(id: Int) {
+        service.downloadCastDetail(url: APIURLs.getCastDetail(id: id)) { [weak self] returnedCast in
+            guard let self = self else { return }
+            guard let returnedCast = returnedCast else { return }
+            
+            view?.navigateToCastDetail(cast: returnedCast)
         }
     }
 }

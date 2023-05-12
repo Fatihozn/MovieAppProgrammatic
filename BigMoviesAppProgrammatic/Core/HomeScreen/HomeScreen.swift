@@ -8,6 +8,7 @@
 import UIKit
 
 protocol HomeScreenProtocol: AnyObject{
+    var ApiControl: String { get set }
     
     func configureVC()
     func configurePopularCollection()
@@ -16,11 +17,12 @@ protocol HomeScreenProtocol: AnyObject{
     func configureTopRatedCollection()
     func reloadCollection(name: String)
     func hideNavigationBar()
-    func navigateToDetail(movie: MovieResult)
+    func navigateToDetail(movie: MovieResult, data: Data)
 }
 
 final class HomeScreen: UIViewController {
 
+    var ApiControl: String
     private var viewModel = HomeViewModel()
     
     private var scrollView: UIScrollView!
@@ -30,6 +32,15 @@ final class HomeScreen: UIViewController {
     private var nowPlayingCollection: UICollectionView!
     private var upcomingCollection: UICollectionView!
     private var topRatedCollection: UICollectionView!
+    
+    init(ApiControl: String) {
+        self.ApiControl = ApiControl
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,9 +93,9 @@ extension HomeScreen: HomeScreenProtocol {
        
     }
     
-    func navigateToDetail(movie: MovieResult) {
+    func navigateToDetail(movie: MovieResult, data: Data) {
         DispatchQueue.main.async {
-            self.navigationController?.pushViewController(DetailScreen(movie: movie), animated: true)
+            self.navigationController?.pushViewController(DetailScreen(movie: movie, ApiControl: self.ApiControl, data: data), animated: true)
         }
     }
 
@@ -156,17 +167,33 @@ extension HomeScreen {
         guard offsetx != 0 else { return }
        
         if offsetx >= contentWidth - (width * 2) && viewModel.shouldMoreData{
-            if scrollView == popularCollection {
-                viewModel.getMovies(url: APIURLs.getPopularMovies(page: viewModel.popularPage), list: "popular")
-            }
-            else if scrollView == nowPlayingCollection {
-                viewModel.getMovies(url: APIURLs.getNowPlayingMovies(page: viewModel.nowPlayingPage), list: "now")
-            }
-            else if scrollView == upcomingCollection {
-                viewModel.getMovies(url: APIURLs.getUpcomingMovies(page: viewModel.upcomingPage), list: "upcoming")
-            }
-            else if scrollView == topRatedCollection {
-                viewModel.getMovies(url: APIURLs.getTopRatedMovies(page: viewModel.upcomingPage), list: "top")
+            if ApiControl == "tv" {
+                if scrollView == popularCollection {
+                    viewModel.getMovies(url: APIURLs.getPopularTV(page: viewModel.popularPage), list: "popular")
+                }
+                else if scrollView == nowPlayingCollection {
+                    viewModel.getMovies(url: APIURLs.getNowPlayingTV(page: viewModel.nowPlayingPage), list: "now")
+                }
+                else if scrollView == upcomingCollection {
+                    viewModel.getMovies(url: APIURLs.getUpcommingTV(page: viewModel.upcomingPage), list: "upcoming")
+                }
+                else if scrollView == topRatedCollection {
+                    viewModel.getMovies(url: APIURLs.getTopRatedTV(page: viewModel.upcomingPage), list: "top")
+                }
+                
+            } else {
+                if scrollView == popularCollection {
+                    viewModel.getMovies(url: APIURLs.getPopularMovies(page: viewModel.popularPage), list: "popular")
+                }
+                else if scrollView == nowPlayingCollection {
+                    viewModel.getMovies(url: APIURLs.getNowPlayingMovies(page: viewModel.nowPlayingPage), list: "now")
+                }
+                else if scrollView == upcomingCollection {
+                    viewModel.getMovies(url: APIURLs.getUpcomingMovies(page: viewModel.upcomingPage), list: "upcoming")
+                }
+                else if scrollView == topRatedCollection {
+                    viewModel.getMovies(url: APIURLs.getTopRatedMovies(page: viewModel.upcomingPage), list: "top")
+                }
             }
         }
     }
@@ -178,7 +205,11 @@ extension HomeScreen {
         let title = UILabel(frame: .zero)
         stackView.addArrangedSubview(title)
         
-        title.text = "Populer Movies"
+        if ApiControl == "tv" {
+            title.text = "Populer Shows"
+        } else {
+            title.text = "Populer Movies"
+        }
         title.font = .boldSystemFont(ofSize: 24)
         
         

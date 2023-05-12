@@ -10,8 +10,6 @@ import YouTubeiOSPlayerHelper
 
 class VideoPlayerView: YTPlayerView {
 
-//    var player: AVPlayer?
-//    var playerLayer: AVPlayerLayer?
     private let url: String
     
     init(frame: CGRect, videoUrl: String) {
@@ -26,7 +24,8 @@ class VideoPlayerView: YTPlayerView {
     }
 
     private func setupVideoPlayer() {
-        load(withVideoId: url)
+            load(withVideoId: url)
+        
     }
     
 }

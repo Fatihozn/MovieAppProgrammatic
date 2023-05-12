@@ -25,8 +25,23 @@ final class MovieService {
         
     }
     
-    func downloadDetail(id: Int, completion: @escaping (MovieResult?) -> () ) {
-        guard let url = URL(string: APIURLs.getDetail(id: id)) else { return }
+    func downloadDetail(url: String,id: Int, completion: @escaping (MovieResult?, Data) -> () ) {
+        guard let url = URL(string: url) else { return }
+        
+        NetworkManager.shared.download(url: url) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let data):
+                completion(self.handleWithData(data), data)
+            case .failure(let error):
+                self.handleWithError(error)
+            }
+        }
+    }
+    
+    func downloadCast(url: String, completion: @escaping ([CastResult]?) -> () ){
+        guard let url = URL(string: url) else { return }
         
         NetworkManager.shared.download(url: url) { [weak self] result in
             guard let self = self else { return }
@@ -40,7 +55,7 @@ final class MovieService {
         }
     }
     
-    func downloadCast(url: String, completion: @escaping ([CastResult]?) -> () ){
+    func downloadCastDetail(url: String, completion: @escaping (CastResult?) -> () ){
         guard let url = URL(string: url) else { return }
         
         NetworkManager.shared.download(url: url) { [weak self] result in
@@ -70,6 +85,21 @@ final class MovieService {
         }
     }
     
+    func donwloadCastMovie(url: String, completion: @escaping ([MovieResult]?) -> () ){
+        guard let url = URL(string: url) else { return }
+        
+        NetworkManager.shared.download(url: url) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let data):
+                completion(self.handleWithDataCast(data))
+            case .failure(let error):
+                self.handleWithError(error)
+            }
+        }
+    }
+    
     private func handleWithError(_ error: Error) {
         print(error.localizedDescription)
     }
@@ -84,7 +114,7 @@ final class MovieService {
         }
     }
     
-    private func handleWithData(_ data: Data) -> MovieResult? {
+    private func handleWithData(_ data: Data) -> (MovieResult?) {
         do {
             let movieResult = try JSONDecoder().decode(MovieResult.self, from: data)
             return movieResult
@@ -100,6 +130,26 @@ final class MovieService {
             return cast.cast
         } catch {
             print(error.localizedDescription)
+            return nil
+        }
+    }
+    
+    private func handleWithData(_ data: Data) -> CastResult? {
+        do{
+            let castResult = try JSONDecoder().decode(CastResult.self, from: data)
+            return castResult
+        }catch{
+            print(error.localizedDescription)
+            return nil
+        }
+    }
+    
+    private func handleWithDataCast(_ data: Data) -> [MovieResult]? {
+        do {
+            let castMovie = try JSONDecoder().decode(CastMovie.self, from: data)
+            return castMovie.cast
+        } catch {
+            print(error)
             return nil
         }
     }
