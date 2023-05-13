@@ -32,7 +32,6 @@ extension DetailViewModel: DetailViewModelProtocol {
             self.view?.configureVideo()
         }
         view?.getCast()
-        view?.getMovie()
     }
     
     func viewWillApear() {
@@ -59,7 +58,7 @@ extension DetailViewModel: DetailViewModelProtocol {
         service.downloadCast(url: url) { [weak self] returnedCast in
             guard let self = self else { return }
             guard let returnedCast = returnedCast else { return }
-            
+            view?.getMovie()
             if returnedCast.count != 0 {
                 DispatchQueue.main.async {
                     self.view?.configureCast()
