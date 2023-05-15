@@ -33,3 +33,8 @@ functional programming, UINavigationController, UITabBarController, UISearchBar,
 
 <img width="359" alt="Search" src="https://github.com/Fatihozn/MovieAppProgrammatic/assets/100231583/ea3ee2f8-3dcc-45c2-bfa2-02727b0836ea">
 
+# Video
+
+https://github.com/Fatihozn/MovieAppProgrammatic/assets/100231583/7426ba7d-29d6-4663-9705-0295e59ef8d6
+
+
