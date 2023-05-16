@@ -46,6 +46,9 @@ final class DetailScreen: UIViewController, YTPlayerViewDelegate {
     private let userDefault = UserDefaults.standard
     private var favList = [Data]()
     private var favListControl = [String]()
+    private var nameList = [String]()
+    
+    private var name = ""
     
     init(movie: MovieResult, ApiControl: String, data: Data) {
         viewModel.getVideo(id: movie._id)
@@ -55,6 +58,13 @@ final class DetailScreen: UIViewController, YTPlayerViewDelegate {
         super.init(nibName: nil, bundle: nil)
         favList = userDefault.array(forKey: "favList") as? [Data] ?? [Data]()
         favListControl = userDefault.array(forKey: "control") as? [String] ?? [String]()
+        nameList = userDefault.array(forKey: "nameList") as? [String] ?? [String]()
+        
+        if ApiControl == "tv" {
+            name = movie._name
+        } else {
+            name = movie._title
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -71,6 +81,7 @@ final class DetailScreen: UIViewController, YTPlayerViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         favList = userDefault.array(forKey: "favList") as? [Data] ?? [Data]()
         favListControl = userDefault.array(forKey: "control") as? [String] ?? [String]()
+        nameList = userDefault.array(forKey: "nameList") as? [String] ?? [String]()
         viewModel.viewWillApear()
         if let playerView = playerView {
             playerView.playVideo()
@@ -87,11 +98,7 @@ extension DetailScreen: DetailScreenProtocol {
     func configureVC() {
         view.backgroundColor = .systemBackground
         navigationController?.isNavigationBarHidden = false
-        if ApiControl == "tv" {
-            title = movie._name
-        } else {
-            title = movie._title
-        }
+        title = name
         scrollView = UIScrollView()
         view.addSubview(scrollView)
         
@@ -106,8 +113,7 @@ extension DetailScreen: DetailScreenProtocol {
     }
     
     func configFavButton() {
-        
-        if favList.contains(data) {
+        if nameList.contains(name) {
             favButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteFavButton))
             navigationItem.rightBarButtonItem = favButton
         } else {
@@ -120,25 +126,26 @@ extension DetailScreen: DetailScreenProtocol {
     @objc func favButtonClicked() {
         favList.append(data)
         favListControl.append(ApiControl)
+        nameList.append(name)
         //favList.removeAll()
         //favListControl.removeAll()
-        print(favList)
-        print(favListControl)
+        //nameList.removeAll()
         userDefault.set(favList, forKey: "favList")
         userDefault.set(favListControl, forKey: "control")
+        userDefault.set(nameList, forKey: "nameList")
         
         favButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteFavButton))
         navigationItem.rightBarButtonItem = favButton
     }
     
     @objc func deleteFavButton() {
-        if let index = favList.firstIndex(of: data) {
+        if let index = nameList.firstIndex(of: name) {
             favList.remove(at: index)
             favListControl.remove(at: index)
-            print(favList)
-            print(favListControl)
+            nameList.remove(at: index)
             userDefault.set(favList, forKey: "favList")
             userDefault.set(favListControl, forKey: "control")
+            userDefault.set(nameList, forKey: "nameList")
         }
         favButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(favButtonClicked))
         navigationItem.rightBarButtonItem = favButton
