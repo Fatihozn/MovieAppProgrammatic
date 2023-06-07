@@ -28,9 +28,6 @@ extension DetailViewModel: DetailViewModelProtocol {
     func viewDidload() {
         view?.configureVC()
         view?.configureInfoView()
-        if self.videoUrl != "" {
-            self.view?.configureVideo()
-        }
         view?.getCast()
     }
     
@@ -103,13 +100,20 @@ extension DetailViewModel: DetailViewModelProtocol {
                 videoUrl = ""
                 return
             }
-            for url in returnedVideoUrls {
-                if url._key != "" {
-                    videoUrl = url._key
-                    return
-                }
-            }
             
+            if returnedVideoUrls.count > 0 {
+                DispatchQueue.main.async {
+                    self.view?.configureVideo()
+                }
+                
+                for url in returnedVideoUrls {
+                    if url._key != "" {
+                        videoUrl = url._key
+                        return
+                    }
+                }
+                
+            }
         }
     }
     
