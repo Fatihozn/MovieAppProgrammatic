@@ -10,6 +10,9 @@
 		4A1C59F629FFFCA30050682C /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1C59F529FFFCA30050682C /* SearchCell.swift */; };
 		4A1C59F92A015E730050682C /* FavoriteScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1C59F82A015E730050682C /* FavoriteScreen.swift */; };
 		4A1C59FB2A015E850050682C /* FavoriteScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1C59FA2A015E850050682C /* FavoriteScreenViewModel.swift */; };
+		4A4A98A82A385085009F689C /* BigMoviesAppProgrammaticUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4A98A72A385085009F689C /* BigMoviesAppProgrammaticUnitTests.swift */; };
+		4A4A98B52A385258009F689C /* BigMoviesAppProgrammaticUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4A98B42A385258009F689C /* BigMoviesAppProgrammaticUITests.swift */; };
+		4A4A98B72A385258009F689C /* BigMoviesAppProgrammaticUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4A98B62A385258009F689C /* BigMoviesAppProgrammaticUITestsLaunchTests.swift */; };
 		4AB686F629F97E3A00CB9F5E /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB686F529F97E3A00CB9F5E /* VideoPlayerView.swift */; };
 		4AB686F929F9897000CB9F5E /* YouTubeiOSPlayerHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 4AB686F829F9897000CB9F5E /* YouTubeiOSPlayerHelper */; };
 		4AB686FC29FAD9F700CB9F5E /* SearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB686FB29FAD9F700CB9F5E /* SearchScreen.swift */; };
@@ -40,10 +43,32 @@
 		4AF72D2529D33DDF00E00A79 /* CastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF72D2429D33DDF00E00A79 /* CastCell.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		4A4A98A92A385085009F689C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4AF72C7129C7550700E00A79 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4AF72C7829C7550700E00A79;
+			remoteInfo = BigMoviesAppProgrammatic;
+		};
+		4A4A98B82A385258009F689C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4AF72C7129C7550700E00A79 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4AF72C7829C7550700E00A79;
+			remoteInfo = BigMoviesAppProgrammatic;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		4A1C59F529FFFCA30050682C /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		4A1C59F82A015E730050682C /* FavoriteScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteScreen.swift; sourceTree = "<group>"; };
 		4A1C59FA2A015E850050682C /* FavoriteScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteScreenViewModel.swift; sourceTree = "<group>"; };
+		4A4A98A52A385085009F689C /* BigMoviesAppProgrammaticUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BigMoviesAppProgrammaticUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A4A98A72A385085009F689C /* BigMoviesAppProgrammaticUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigMoviesAppProgrammaticUnitTests.swift; sourceTree = "<group>"; };
+		4A4A98B22A385258009F689C /* BigMoviesAppProgrammaticUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BigMoviesAppProgrammaticUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A4A98B42A385258009F689C /* BigMoviesAppProgrammaticUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigMoviesAppProgrammaticUITests.swift; sourceTree = "<group>"; };
+		4A4A98B62A385258009F689C /* BigMoviesAppProgrammaticUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigMoviesAppProgrammaticUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		4AB686F529F97E3A00CB9F5E /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		4AB686FB29FAD9F700CB9F5E /* SearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreen.swift; sourceTree = "<group>"; };
 		4AB686FD29FADA1A00CB9F5E /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
@@ -76,6 +101,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4A4A98A22A385085009F689C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4A4A98AF2A385258009F689C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4AF72C7629C7550700E00A79 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -94,6 +133,23 @@
 				4A1C59FA2A015E850050682C /* FavoriteScreenViewModel.swift */,
 			);
 			path = FavoriteScreen;
+			sourceTree = "<group>";
+		};
+		4A4A98A62A385085009F689C /* BigMoviesAppProgrammaticUnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				4A4A98A72A385085009F689C /* BigMoviesAppProgrammaticUnitTests.swift */,
+			);
+			path = BigMoviesAppProgrammaticUnitTests;
+			sourceTree = "<group>";
+		};
+		4A4A98B32A385258009F689C /* BigMoviesAppProgrammaticUITests */ = {
+			isa = PBXGroup;
+			children = (
+				4A4A98B42A385258009F689C /* BigMoviesAppProgrammaticUITests.swift */,
+				4A4A98B62A385258009F689C /* BigMoviesAppProgrammaticUITestsLaunchTests.swift */,
+			);
+			path = BigMoviesAppProgrammaticUITests;
 			sourceTree = "<group>";
 		};
 		4AB686FA29FAD9D100CB9F5E /* SearchScreen */ = {
@@ -118,6 +174,8 @@
 			isa = PBXGroup;
 			children = (
 				4AF72C7B29C7550700E00A79 /* BigMoviesAppProgrammatic */,
+				4A4A98A62A385085009F689C /* BigMoviesAppProgrammaticUnitTests */,
+				4A4A98B32A385258009F689C /* BigMoviesAppProgrammaticUITests */,
 				4AF72C7A29C7550700E00A79 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -126,6 +184,8 @@
 			isa = PBXGroup;
 			children = (
 				4AF72C7929C7550700E00A79 /* BigMoviesAppProgrammatic.app */,
+				4A4A98A52A385085009F689C /* BigMoviesAppProgrammaticUnitTests.xctest */,
+				4A4A98B22A385258009F689C /* BigMoviesAppProgrammaticUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -232,6 +292,42 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4A4A98A42A385085009F689C /* BigMoviesAppProgrammaticUnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4A4A98AD2A385085009F689C /* Build configuration list for PBXNativeTarget "BigMoviesAppProgrammaticUnitTests" */;
+			buildPhases = (
+				4A4A98A12A385085009F689C /* Sources */,
+				4A4A98A22A385085009F689C /* Frameworks */,
+				4A4A98A32A385085009F689C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4A4A98AA2A385085009F689C /* PBXTargetDependency */,
+			);
+			name = BigMoviesAppProgrammaticUnitTests;
+			productName = BigMoviesAppProgrammaticUnitTests;
+			productReference = 4A4A98A52A385085009F689C /* BigMoviesAppProgrammaticUnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		4A4A98B12A385258009F689C /* BigMoviesAppProgrammaticUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4A4A98BA2A385258009F689C /* Build configuration list for PBXNativeTarget "BigMoviesAppProgrammaticUITests" */;
+			buildPhases = (
+				4A4A98AE2A385258009F689C /* Sources */,
+				4A4A98AF2A385258009F689C /* Frameworks */,
+				4A4A98B02A385258009F689C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4A4A98B92A385258009F689C /* PBXTargetDependency */,
+			);
+			name = BigMoviesAppProgrammaticUITests;
+			productName = BigMoviesAppProgrammaticUITests;
+			productReference = 4A4A98B22A385258009F689C /* BigMoviesAppProgrammaticUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		4AF72C7829C7550700E00A79 /* BigMoviesAppProgrammatic */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4AF72C8D29C7550800E00A79 /* Build configuration list for PBXNativeTarget "BigMoviesAppProgrammatic" */;
@@ -259,9 +355,17 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1420;
+				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
+					4A4A98A42A385085009F689C = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = 4AF72C7829C7550700E00A79;
+					};
+					4A4A98B12A385258009F689C = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = 4AF72C7829C7550700E00A79;
+					};
 					4AF72C7829C7550700E00A79 = {
 						CreatedOnToolsVersion = 14.2;
 					};
@@ -284,11 +388,27 @@
 			projectRoot = "";
 			targets = (
 				4AF72C7829C7550700E00A79 /* BigMoviesAppProgrammatic */,
+				4A4A98A42A385085009F689C /* BigMoviesAppProgrammaticUnitTests */,
+				4A4A98B12A385258009F689C /* BigMoviesAppProgrammaticUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4A4A98A32A385085009F689C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4A4A98B02A385258009F689C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4AF72C7729C7550700E00A79 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -301,6 +421,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4A4A98A12A385085009F689C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A4A98A82A385085009F689C /* BigMoviesAppProgrammaticUnitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4A4A98AE2A385258009F689C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A4A98B72A385258009F689C /* BigMoviesAppProgrammaticUITestsLaunchTests.swift in Sources */,
+				4A4A98B52A385258009F689C /* BigMoviesAppProgrammaticUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4AF72C7529C7550700E00A79 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -338,6 +475,19 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		4A4A98AA2A385085009F689C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4AF72C7829C7550700E00A79 /* BigMoviesAppProgrammatic */;
+			targetProxy = 4A4A98A92A385085009F689C /* PBXContainerItemProxy */;
+		};
+		4A4A98B92A385258009F689C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4AF72C7829C7550700E00A79 /* BigMoviesAppProgrammatic */;
+			targetProxy = 4A4A98B82A385258009F689C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		4AF72C8729C7550800E00A79 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -350,6 +500,88 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4A4A98AB2A385085009F689C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fatih.BigMoviesAppProgrammaticUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BigMoviesAppProgrammatic.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BigMoviesAppProgrammatic";
+			};
+			name = Debug;
+		};
+		4A4A98AC2A385085009F689C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fatih.BigMoviesAppProgrammaticUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BigMoviesAppProgrammatic.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BigMoviesAppProgrammatic";
+			};
+			name = Release;
+		};
+		4A4A98BB2A385258009F689C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fatih.BigMoviesAppProgrammaticUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = BigMoviesAppProgrammatic;
+			};
+			name = Debug;
+		};
+		4A4A98BC2A385258009F689C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fatih.BigMoviesAppProgrammaticUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = BigMoviesAppProgrammatic;
+			};
+			name = Release;
+		};
 		4AF72C8B29C7550800E00A79 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -471,12 +703,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7FAV9HQR94;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BigMoviesAppProgrammatic/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -500,12 +734,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7FAV9HQR94;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BigMoviesAppProgrammatic/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -525,6 +761,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4A4A98AD2A385085009F689C /* Build configuration list for PBXNativeTarget "BigMoviesAppProgrammaticUnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A4A98AB2A385085009F689C /* Debug */,
+				4A4A98AC2A385085009F689C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4A4A98BA2A385258009F689C /* Build configuration list for PBXNativeTarget "BigMoviesAppProgrammaticUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A4A98BB2A385258009F689C /* Debug */,
+				4A4A98BC2A385258009F689C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4AF72C7429C7550700E00A79 /* Build configuration list for PBXProject "BigMoviesAppProgrammatic" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
